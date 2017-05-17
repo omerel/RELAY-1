@@ -30,4 +30,4 @@ FE Android App Designed & Created by [@omerel](https://twitter.com/omerel) avial
 
 ## License
 
-Distributed under the MIT license. See [LICENSE.md](LICENSE.md) for more information.
+Distributed under the MIT license. See [LICENSE](LICENSE) for more information.
