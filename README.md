@@ -25,7 +25,7 @@ FE Android App Designed & Created by [@omerel](https://twitter.com/omerel) avial
 
 * Designed & Created by [@barrinbar](https://twitter.com/barrinbar)
 * Shared the love of RELAY with [@omerel](https://twitter.com/omerel)
-* Mentor Boris Morose @ Afeka College
+* Mentored by Boris Morose @ [Afeka College](http://english.afeka.ac.il)
 * Initiatied with [@verekia](https://github.com/verekia/)'s [boilerplate](https://github.com/verekia/js-stack-from-scratch/releases)
 
 ## License
