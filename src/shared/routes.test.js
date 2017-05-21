@@ -1,7 +1,7 @@
 // import { helloEndpointRoute } from './routes'
 import {
   helloEndpointRoute,
-  handshakeRoute,
+  syncNodeRoute,
 } from './routes'
 
 test('helloEndpointRoute', () => {
@@ -9,7 +9,7 @@ test('helloEndpointRoute', () => {
   expect(helloEndpointRoute(123)).toBe('/ajax/hello/123')
 })
 
-test('handshakeRoute', () => {
-  expect(handshakeRoute()).toBe('/api/handshake/:str')
-  expect(handshakeRoute('02:00:00:00:00:00')).toBe('/api/handshake/02:00:00:00:00:00')
+test('syncNodeRoute', () => {
+  expect(syncNodeRoute()).toBe('/api/syncnode/:metadata')
+  expect(syncNodeRoute('02:00:00:00:00:00')).toBe('/api/syncnode/02:00:00:00:00:00')
 })

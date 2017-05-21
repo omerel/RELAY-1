@@ -12,7 +12,7 @@ import {
   HELLO_PAGE_ROUTE,
   HELLO_ASYNC_PAGE_ROUTE,
   helloEndpointRoute,
-  handshakeRoute,
+  syncNodeRoute,
 } from '../shared/routes'
 
 import renderApp from './render-app'
@@ -34,8 +34,8 @@ export default (app: Object) => {
     res.json(helloEndpoint(req.params.num))
   })
 
-  app.get(handshakeRoute(), (req, res) => {
-    res.json(handshakeRoute(req.params.str))
+  app.get(syncNodeRoute(), (req, res) => {
+    res.json(syncNodeRoute(req.params.str))
   })
 
   app.get('/500', () => {

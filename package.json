@@ -1,10 +1,12 @@
 {
   "name": "RELAY",
-  "version": "0.0.1", 
+  "version": "0.0.1",
   "repository": "barrinbar/RELAY",
   "author": "Barr Inbar - @barrinbar",
   "license": "MIT",
-  "browserslist": ["> 1%"],
+  "browserslist": [
+    "> 1%"
+  ],
   "engines": {
     "node": "7.x",
     "yarn": "0.20.3"
@@ -29,6 +31,7 @@
     "immutable": "^4.0.0-rc.1",
     "isomorphic-fetch": "^2.2.1",
     "jquery": "^3.1.1",
+    "mongoose": "^4.9.10",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-helmet": "^4.0.0",
