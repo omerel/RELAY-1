@@ -1,5 +1,6 @@
 // @flow
 
+// Web Controller
 export const homePage = () => null
 
 export const helloPage = () => ({
@@ -11,5 +12,10 @@ export const helloAsyncPage = () => ({
 })
 
 export const helloEndpoint = (num: number) => ({
+  serverMessage: `Hello from the server! (received ${num})`,
+})
+
+// SPI Conrtroller
+export const syncServer = (num: number) => ({
   serverMessage: `Hello from the server! (received ${num})`,
 })
