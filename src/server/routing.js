@@ -7,17 +7,53 @@ import {
   helloEndpoint,
 } from './controller'
 
+import node from './api/controller/node'
+import message from './api/controller/message'
+import handshake from './api/controller/handshake'
+
 import {
   HOME_PAGE_ROUTE,
   HELLO_PAGE_ROUTE,
   HELLO_ASYNC_PAGE_ROUTE,
   helloEndpointRoute,
-  syncNodeRoute,
+  NODE_API_ROUTE,
+  // GRAPH_API_ROUTE,
+  MESSAGE_API_ROUTE,
+  HANDSHAKE_API_ROUTE,
 } from '../shared/routes'
 
 import renderApp from './render-app'
 
 export default (app: Object) => {
+  // Restful API routes
+  app.route(NODE_API_ROUTE)
+      .get(node.findAll)
+      .post(node.add)
+
+  app.route(`${NODE_API_ROUTE}/:id`)
+      .get(node.find)
+      .put(node.update)
+      .delete(node.delete)
+
+  app.route(MESSAGE_API_ROUTE)
+      .get(message.findAll)
+      .post(message.add)
+
+  app.route(`${MESSAGE_API_ROUTE}/:id`)
+      .get(message.find)
+      .put(message.update)
+      .delete(message.delete)
+
+  app.route(HANDSHAKE_API_ROUTE)
+      .get(handshake.findAll)
+      .post(handshake.add)
+
+  app.route(`${HANDSHAKE_API_ROUTE}/:id`)
+      .get(handshake.find)
+      .put(handshake.update)
+      .delete(handshake.delete)
+
+  // Web app routes
   app.get(HOME_PAGE_ROUTE, (req, res) => {
     res.send(renderApp(req.url, homePage()))
   })
@@ -32,10 +68,6 @@ export default (app: Object) => {
 
   app.get(helloEndpointRoute(), (req, res) => {
     res.json(helloEndpoint(req.params.num))
-  })
-
-  app.get(syncNodeRoute(), (req, res) => {
-    res.json(syncNodeRoute(req.params.str))
   })
 
   app.get('/500', () => {

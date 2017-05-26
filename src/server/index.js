@@ -5,6 +5,7 @@ import express from 'express'
 import { Server } from 'http'
 import socketIO from 'socket.io'
 import mongoose from 'mongoose'
+import bodyParser from 'body-parser'
 
 import routing from './routing'
 import { WEB_PORT, STATIC_PATH, MONGODB_URI } from '../shared/config'
@@ -18,7 +19,7 @@ mongoose.connect(MONGODB_URI)
 
 // Get the default connection
 const db = mongoose.connection
-export default { db }
+// export default { db }
 
 // When successfully connected
 db.on('connected', () => {
@@ -32,6 +33,11 @@ db.on('connected', () => {
   const io = socketIO(http)
   setUpSocket(io)
 
+  // configure app to use bodyParser()to get the data from a POST
+  app.use(bodyParser.urlencoded({ extended: true }))
+  app.use(bodyParser.json())
+
+  // Use compression (gzip)
   app.use(compression())
   app.use(STATIC_PATH, express.static('dist'))
   app.use(STATIC_PATH, express.static('public'))
