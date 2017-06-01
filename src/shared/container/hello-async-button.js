@@ -2,7 +2,7 @@
 
 import { connect } from 'react-redux'
 
-import { sayHelloAsync } from '../action/hello'
+import { sayHelloAsync } from '../action/relay'
 import Button from '../component/button'
 
 const mapStateToProps = () => ({

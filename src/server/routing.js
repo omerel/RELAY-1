@@ -22,7 +22,16 @@ import {
   HANDSHAKE_API_ROUTE,
 } from '../shared/routes'
 
+import {
+  // HTTP_OK,
+  // HTTP_CREATED,
+  HTTP_NOT_FOUND,
+  // HTTP_BAD_REQUEST,
+  HTTP_INTERNAL_SERVER_ERROR,
+} from '../shared/config'
+
 import renderApp from './render-app'
+/* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 
 export default (app: Object) => {
   // Restful API routes
@@ -31,7 +40,7 @@ export default (app: Object) => {
       .post(node.add)
 
   app.route(`${NODE_API_ROUTE}/:id`)
-      .get(node.find)
+      .get(node.findById)
       .put(node.update)
       .delete(node.delete)
 
@@ -40,7 +49,7 @@ export default (app: Object) => {
       .post(message.add)
 
   app.route(`${MESSAGE_API_ROUTE}/:id`)
-      .get(message.find)
+      .get(message.findById)
       .put(message.update)
       .delete(message.delete)
 
@@ -49,7 +58,7 @@ export default (app: Object) => {
       .post(handshake.add)
 
   app.route(`${HANDSHAKE_API_ROUTE}/:id`)
-      .get(handshake.find)
+      .get(handshake.findById)
       .put(handshake.update)
       .delete(handshake.delete)
 
@@ -70,19 +79,19 @@ export default (app: Object) => {
     res.json(helloEndpoint(req.params.num))
   })
 
-  app.get('/500', () => {
+  app.get(`/${HTTP_INTERNAL_SERVER_ERROR}`, () => {
     throw Error('Fake Internal Server Error')
   })
 
   app.get('*', (req, res) => {
-    res.status(404).send(renderApp(req.url))
+    res.status(HTTP_NOT_FOUND).send(renderApp(req.url))
   })
 
   // eslint-disable-next-line no-unused-vars
   app.use((err, req, res, next) => {
     // eslint-disable-next-line no-console
     console.error(err.stack)
-    res.status(500).send('Something went wrong!')
+    res.status(HTTP_INTERNAL_SERVER_ERROR).send('Something went wrong!')
     next()
   })
 }

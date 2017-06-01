@@ -12,7 +12,7 @@ import {
 const Schema = mongoose.Schema
 
 const MessageSchema = new Schema({
-  id: String,
+  _id: String,
   timeCreated: Date,
   status: { type: Number,
     enum: [STATUS_MESSAGE_CREATED,

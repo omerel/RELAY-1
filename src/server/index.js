@@ -15,6 +15,11 @@ import setUpSocket from './socket'
 /* eslint-disable no-console */
 
 // Connect to the database
+// mongoose.Promise = global.Promise
+mongoose.Promise = require('bluebird')
+// assert.equal(query.exec().constructor, require('bluebird'))
+// Promise.promisifyAll(require('mongoose'))
+
 mongoose.connect(MONGODB_URI)
 
 // Get the default connection

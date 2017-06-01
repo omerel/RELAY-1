@@ -15,10 +15,12 @@ require('./node')
 require('./message')
 require('./handshake')
 
+/* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
+
 test('Check Node Schema', () => {
   const Node = mongoose.model('Nodes')
   const newNode = new Node({
-    id: '12345678abcdef',
+    _id: '592a9e2b13928b85d225b55f',
     timeStampNodeDetails: new Date(),
     timeStampNodeRelations: new Date(),
     rank: {},
@@ -31,14 +33,14 @@ test('Check Node Schema', () => {
     timeStampRankFromServer: {},
   })
 
-  expect(newNode.id).toBe('12345678abcdef')
+  expect(newNode._id).toBe('592a9e2b13928b85d225b55f')
   expect(newNode.rank).toBe(DEFAULT_RANK)
 })
 
 test('Check Message Schema', () => {
   const Message = mongoose.model('Messages')
   const newMessage = new Message({
-    id: '12345678abcdef',
+    _id: '592a9e2b13928b85d225b55f',
     timeCreated: new Date(),
     status: STATUS_MESSAGE_CREATED,
     senderId: String,
@@ -48,7 +50,7 @@ test('Check Message Schema', () => {
     attachment: {},
   })
 
-  expect(newMessage.id).toBe('12345678abcdef')
+  expect(newMessage._id).toBe('592a9e2b13928b85d225b55f')
   expect(newMessage.content).toBe('Hello World')
 })
 

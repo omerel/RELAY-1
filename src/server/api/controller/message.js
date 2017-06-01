@@ -1,6 +1,4 @@
-import mongoose from 'mongoose'
-
-const Message = mongoose.model('Message')
+import Message from '../model/message'
 
 exports.findAll = (req, res) => {
   Message.find({}, (err, message) => {
@@ -30,7 +28,6 @@ exports.add = (req, res) => {
   })
 }
 
-
 exports.update = (req, res) => {
   Message.findOneAndUpdate(req.params.id, req.body, { new: true }, (err, message) => {
     if (err) {
@@ -39,7 +36,6 @@ exports.update = (req, res) => {
     res.json(message)
   })
 }
-
 
 exports.delete = (req, res) => {
   Message.remove({

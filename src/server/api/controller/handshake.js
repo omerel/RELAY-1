@@ -1,6 +1,4 @@
-import mongoose from 'mongoose'
-
-const Handshake = mongoose.model('Handshake')
+import Handshake from '../model/handshake'
 
 exports.findAll = (req, res) => {
   Handshake.find({}, (err, handshake) => {

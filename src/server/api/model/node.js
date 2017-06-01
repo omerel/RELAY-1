@@ -4,18 +4,17 @@ import { DEFAULT_RANK } from '../../../shared/config'
 
 const Schema = mongoose.Schema
 
-const NodeSchema = new Schema({
-  id: String,
+const nodeSchema = new Schema({
   timeStampNodeDetails: { type: Date, default: Date.Now },
   timeStampNodeRelations: { type: Date, default: Date.Now },
   rank: { type: Number, default: DEFAULT_RANK },
-  email: String,
-  phoneNumber: String,
-  userName: String,
-  fullName: String,
+  email: { type: String, default: '' },
+  phoneNumber: { type: String, default: '' },
+  userName: { type: String, default: '' },
+  fullName: { type: String, default: '' },
   profilePicture: Buffer,
   residenceCode: Number,
   timeStampRankFromServer: { type: Date, default: Date.Now },
 })
 
-module.exports = mongoose.model('Nodes', NodeSchema)
+module.exports = mongoose.model('nodes', nodeSchema)
