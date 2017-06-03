@@ -11,6 +11,7 @@ import node from './api/controller/node'
 import message from './api/controller/message'
 import handshake from './api/controller/handshake'
 import rules from './api/controller/rules'
+import sync from './api/controller/sync'
 
 import {
   HOME_PAGE_ROUTE,
@@ -28,10 +29,11 @@ import {
   MSNS_RATIO_API_ROUTE,
   MESSAGE_TTL_API_ROUTE,
   RANDOM_NODE_TIME_API_ROUTE,
+  SYNC_API_ROUTE,
 } from '../shared/routes'
 
 import {
-  // HTTP_OK,
+  HTTP_OK,
   // HTTP_CREATED,
   HTTP_NOT_FOUND,
   // HTTP_BAD_REQUEST,
@@ -48,8 +50,8 @@ export default (app: Object) => {
       .post(node.add)
 
   app.route(`${NODE_API_ROUTE}/:id`)
-      .get(node.findById)
-      .put(node.update)
+      .get(node.findById, (req, res) => res.status(HTTP_OK).json(req.node))
+      .put(node.update, (req, res) => res.status(HTTP_OK).json(req.node))
       .delete(node.delete)
 
   app.route(MESSAGE_API_ROUTE)
@@ -78,6 +80,9 @@ export default (app: Object) => {
   app.route(`${MESSAGE_TTL_API_ROUTE}/:val`).put(rules.updateMessageTTL)
   app.route(`${RANDOM_NODE_TIME_API_ROUTE}/:val`).put(rules.updateRandomNodeTime)
 
+  app.route(`${SYNC_API_ROUTE}/:id`).put(sync.sync)
+  // app.route(SYNC_API_ROUTE).put(sync.sync)
+
   // Web app routes
   app.get(HOME_PAGE_ROUTE, (req, res) => {
     res.send(renderApp(req.url, homePage()))
@@ -105,9 +110,11 @@ export default (app: Object) => {
 
   // eslint-disable-next-line no-unused-vars
   app.use((err, req, res, next) => {
-    // eslint-disable-next-line no-console
-    console.error(err.stack)
-    res.status(HTTP_INTERNAL_SERVER_ERROR).send('Something went wrong!')
+    if (err) {
+      // eslint-disable-next-line no-console
+      console.error(err.stack)
+      res.status(HTTP_INTERNAL_SERVER_ERROR).send('Something went wrong!')
+    }
     next()
   })
 }

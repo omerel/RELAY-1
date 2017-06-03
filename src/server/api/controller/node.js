@@ -26,15 +26,15 @@ exports.findAll = (req, res/* , next*/) => {
   })
 }
 
-exports.findById = (req, res/* , next*/) => {
+exports.findById = (req, res, next) => {
   if (req.params.id) {
     Node.findOne({ _id: req.params.id }, (err, node) => {
       if (err) {
         res.status(HTTP_NOT_FOUND).send(err)
       } else {
         req.node = node
-        res.status(HTTP_OK).json(node)
-        // next()
+        // res.status(HTTP_OK).json(node)
+        next()
       }
     })
   } else {
@@ -62,7 +62,7 @@ exports.add = (req, res) => {
   }
 }
 
-exports.update = (req, res/* , next()*/) => {
+exports.update = (req, res, next) => {
   if (req.params.id) {
     const newNode = new Node(req.body)
     if (req.body.uuid !== ('' || null)) {
@@ -75,8 +75,8 @@ exports.update = (req, res/* , next()*/) => {
         res.status(HTTP_NOT_FOUND).send(err)
       } else {
         req.node = node
-        res.status(HTTP_OK).json(node)
-        // next()
+        // res.status(HTTP_OK).json(node)
+        next()
       }
     })
   } else {

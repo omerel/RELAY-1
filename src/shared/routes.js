@@ -18,5 +18,6 @@ export const MSBN_RATIO_API_ROUTE = '/api/rules/msbnratio'
 export const MSNS_RATIO_API_ROUTE = '/api/rules/msnsratio'
 export const MESSAGE_TTL_API_ROUTE = '/api/rules/messagettl'
 export const RANDOM_NODE_TIME_API_ROUTE = '/api/rules/randomnodetime'
+export const SYNC_API_ROUTE = '/api/sync'
 
 export const helloEndpointRoute = (num: ?number) => `/ajax/hello/${num || ':num'}`
