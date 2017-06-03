@@ -10,6 +10,7 @@ import {
 import node from './api/controller/node'
 import message from './api/controller/message'
 import handshake from './api/controller/handshake'
+import rules from './api/controller/rules'
 
 import {
   HOME_PAGE_ROUTE,
@@ -20,6 +21,13 @@ import {
   // GRAPH_API_ROUTE,
   MESSAGE_API_ROUTE,
   HANDSHAKE_API_ROUTE,
+  RULES_API_ROUTE,
+  MSBN_DURATION_API_ROUTE,
+  MSNS_DURATION_API_ROUTE,
+  MSBN_RATIO_API_ROUTE,
+  MSNS_RATIO_API_ROUTE,
+  MESSAGE_TTL_API_ROUTE,
+  RANDOM_NODE_TIME_API_ROUTE,
 } from '../shared/routes'
 
 import {
@@ -61,6 +69,14 @@ export default (app: Object) => {
       .get(handshake.findById)
       .put(handshake.update)
       .delete(handshake.delete)
+
+  app.route(RULES_API_ROUTE).get(rules.get)
+  app.route(`${MSBN_DURATION_API_ROUTE}/:val`).put(rules.updateMSBNDuration)
+  app.route(`${MSNS_DURATION_API_ROUTE}/:val`).put(rules.updateMSNSDuration)
+  app.route(`${MSBN_RATIO_API_ROUTE}/:val`).put(rules.updateMSBNRatio)
+  app.route(`${MSNS_RATIO_API_ROUTE}/:val`).put(rules.updateMSBNRatio)
+  app.route(`${MESSAGE_TTL_API_ROUTE}/:val`).put(rules.updateMessageTTL)
+  app.route(`${RANDOM_NODE_TIME_API_ROUTE}/:val`).put(rules.updateRandomNodeTime)
 
   // Web app routes
   app.get(HOME_PAGE_ROUTE, (req, res) => {

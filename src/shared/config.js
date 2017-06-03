@@ -25,6 +25,12 @@ export const TYPE_MESSAGE_TEXT = 11
 export const TYPE_MESSAGE_INCLUDE_ATTACHMENT = 12
 
 export const DEFAULT_RANK = 2
+export const DEFAULT_MSBN_DURATION = 30
+export const DEFAULT_MSNS_DURATION = 30
+export const DEFAULT_MSBN_RATIO = 0.4
+export const DEFAULT_MSNS_RATIO = 0.6
+export const DEFAULT_MESSAGE_TTL = 14
+export const DEFAULT_RANDOM_NODE_TIME = 10
 
 export const HTTP_OK = 200
 export const HTTP_CREATED = 201

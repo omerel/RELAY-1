@@ -11,5 +11,12 @@ export const NODE_API_ROUTE = '/api/node'
 export const GRAPH_API_ROUTE = '/api/graph'
 export const MESSAGE_API_ROUTE = '/api/message'
 export const HANDSHAKE_API_ROUTE = '/api/handshake'
+export const RULES_API_ROUTE = '/api/rules'
+export const MSBN_DURATION_API_ROUTE = '/api/rules/msbnduration'
+export const MSNS_DURATION_API_ROUTE = '/api/rules/msnsduration'
+export const MSBN_RATIO_API_ROUTE = '/api/rules/msbnratio'
+export const MSNS_RATIO_API_ROUTE = '/api/rules/msnsratio'
+export const MESSAGE_TTL_API_ROUTE = '/api/rules/messagettl'
+export const RANDOM_NODE_TIME_API_ROUTE = '/api/rules/randomnodetime'
 
 export const helloEndpointRoute = (num: ?number) => `/ajax/hello/${num || ':num'}`
