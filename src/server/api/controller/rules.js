@@ -11,12 +11,14 @@ import {
 
 mongoose.set('debug', true)
 
-exports.get = (req, res) => {
-  Rule.find({}, (err, ruless) => {
+exports.get = (req, res, next) => {
+  Rule.find({}, (err, rules) => {
     if (err) {
       res.status(HTTP_NOT_FOUND).send(err)
     } else {
-      res.status(HTTP_OK).json(ruless[0])
+      req.res.rules = rules[0]
+      next()
+      // res.status(HTTP_OK).json(rules[0])
     }
   })
 }

@@ -39,9 +39,9 @@ exports.findById = (req, res) => {
 }
 
 exports.add = (req, res) => {
-  const newHandshake = new Handshake(req.body)
-  // if (req.body.uuid !== ('' || null)) {
-  //   newHandshake._id = req.body.uuid
+  const newHandshake = new Handshake(req.body.handshake)
+  // if (req.body.handshake.uuid !== ('' || null)) {
+  //   newHandshake._id = req.body.handshake.uuid
   // }
   try {
     newHandshake.save((err) => {
@@ -74,7 +74,7 @@ exports.addMany = (req, res) => {
 
 exports.update = (req, res) => {
   if (req.params.id) {
-    Handshake.findOneAndUpdate(req.params.id, req.body,
+    Handshake.findOneAndUpdate(req.params.id, req.body.handshake,
     { new: true, upsert: true }, (err, handshake) => {
       if (err) {
         res.status(HTTP_NOT_FOUND).send(err)

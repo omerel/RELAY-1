@@ -3,7 +3,9 @@ import mongoose from 'mongoose'
 // import rank from './rank'
 
 import node from './node'
-// import message from './api/controller/message'
+import syncHistory from './syncHistory'
+import relations from './relation'
+import messages from './message'
 // import handshake from './api/controller/handshake'
 // import rules from './api/controller/rules'
 
@@ -20,7 +22,30 @@ import {
 mongoose.set('debug', true)
 
 exports.sync = (req, res) => {
-  // Update Node
-  // req.params.id = req.body.uuid
-  node.update(res.status(HTTP_OK).json(req.node))
+  if (req.params.id && req.body.node) {
+    // req.body.node._id = req.params.id
+    node.update(
+      syncHistory.addEvent(
+        relations.sync(
+          messages.sync(
+            res.status(HTTP_OK).json(node.collection.aggregate([
+              { $match: { node: req.body.node } }, // Only look at Luke Skywalker
+              {
+                $graphLookup: {
+                  from: 'relations', // Use the relations collection
+                  startWith: '$friends', // Start looking at the document's `friends` property
+                  connectFromField: 'friends', // A link in the graph is represented by the friends property...
+                  connectToField: '_id', // ... pointing to another node's _id property
+                  maxDepth: 1, // Only recurse one level deep
+                  as: 'relations', // Store this in the `relations` property
+                },
+              },
+            ]),
+            // Response:
+            // Rank
+            // Relations (delta by rank)
+            // Messages (delta)
+            // Status OK
+    )))))
+  }
 }

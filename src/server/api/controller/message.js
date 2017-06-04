@@ -43,11 +43,11 @@ exports.findById = (req, res) => {
 }
 
 exports.add = (req, res) => {
-  const newMessage = new Message(req.body)
-  // if (req.body.uuid !== ('' || null)) {
-  //   newMessage._id = req.body.uuid
+  const newMessage = new Message(req.body.message)
+  // if (req.body.message.uuid !== ('' || null)) {
+  //   newMessage._id = req.body.message.uuid
   // }
-  if (req.body.status !== ('' || null) && req.body.status !== STATUS_MESSAGE_DELIVERED) {
+  if (req.body.message.status !== ('' || null) && req.body.message.status !== STATUS_MESSAGE_DELIVERED) {
     newMessage.status = STATUS_MESSAGE_RECEIVED_IN_SERVER
   }
   try {
@@ -66,7 +66,7 @@ exports.add = (req, res) => {
 exports.addMany = (req, res) => {
   if (req.body.messages) {
     try {
-      Message.insertMany(req.body.handshakes, (err, messages) => {
+      Message.insertMany(req.body.messages, (err, messages) => {
         if (err) {
           res.send(err)
         } else {
@@ -81,7 +81,7 @@ exports.addMany = (req, res) => {
 
 exports.update = (req, res) => {
   if (req.params.id) {
-    Message.findOneAndUpdate(req.params.id, req.body, { new: true }, (err, message) => {
+    Message.findOneAndUpdate(req.params.id, req.body.message, { new: true }, (err, message) => {
       if (err) {
         res.status(HTTP_NOT_FOUND).send(err)
       } else {
@@ -91,6 +91,29 @@ exports.update = (req, res) => {
   } else {
     res.status(HTTP_BAD_REQUEST).send('No message id')
   }
+}
+
+exports.sync = (req, res, next) => {
+  if (!req.body.known_messages) {
+    return res.status(HTTP_BAD_REQUEST).send('No relation id')
+  }
+  const nodeMessages = req.body.messages
+  for (let i = 0, len = nodeMessages.length; i < len; i += 1) {
+    Message.findOne({ uuid: nodeMessages[i].uuid }, (err, srvMessage) => {
+      if (err) { res.status(HTTP_NOT_FOUND).send(err) }
+      if (srvMessage) {
+        if (nodeMessages[i].status < STATUS_MESSAGE_RECEIVED_IN_SERVER) {
+          srvMessage.status.set(STATUS_MESSAGE_RECEIVED_IN_SERVER)
+        } else if (nodeMessages[i].status === STATUS_MESSAGE_DELIVERED) {
+          srvMessage.status.set(STATUS_MESSAGE_DELIVERED)
+        }
+        srvMessage.save((error) => {
+          if (error) { res.status(HTTP_INTERNAL_SERVER_ERROR).send(error) }
+        })
+      }
+    })
+  }
+  return next()
 }
 
 exports.delete = (req, res) => {
