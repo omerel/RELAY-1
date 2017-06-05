@@ -3,7 +3,8 @@
 export const WEB_PORT = process.env.PORT || 8000
 export const WDS_PORT = 7000
 export const STATIC_PATH = '/static'
-export const MONGODB_URI = 'mongodb://localhost/RELAY'
+// export const MONGODB_URI = 'mongodb://localhost/RELAY'
+export const MONGODB_URI = 'mongodb://relay:relay@ds139197.mlab.com:39197/heroku_d4fbkbsq'
 export const APP_NAME = 'RELAY'
 
 export const APP_CONTAINER_CLASS = 'js-app'
