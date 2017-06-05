@@ -1,7 +1,7 @@
 # RELAY
 
-[![Build Status](https://img.shields.io/travis/barrinbar/learnode.svg?style=flat-square)](https://travis-ci.org/barrinbar/RELAY)
-[![Coverage Status](https://img.shields.io/coveralls/barrinbar/learnode.svg?style=flat-square)](https://coveralls.io/github/barrinbar/RELAY?branch=master)
+[![Build Status](https://img.shields.io/travis/barrinbar/RELAY.svg?style=flat-square)](https://travis-ci.org/barrinbar/RELAY)
+[![Coverage Status](https://img.shields.io/coveralls/barrinbar/RELAY.svg?style=flat-square)](https://coveralls.io/github/barrinbar/RELAY?branch=master)
 
 A Dynamic Network Framework for remote areas without access to the Internet
 

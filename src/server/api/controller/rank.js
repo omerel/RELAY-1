@@ -17,10 +17,10 @@ mongoose.set('debug', true)
 exports.calcRank = (nodeId: String) => {
   // Get rules
   rules.get(() => {
-   // calcMSBN * MSBNr + calcMSNS * MSNSr
-  // TODO: save all syncs with server
-  // TODO: retrieve sync with server
-  // TODO: save max sync with server and max handshake counter
+    // calcMSBN * MSBNr + calcMSNS * MSNSr
+    // TODO: save all syncs with server
+    // TODO: retrieve sync with server
+    // TODO: save max sync with server and max handshake counter
     let rank = DEFAULT_RANK
     if (nodeId != null) {
       rank = 3

@@ -16,7 +16,7 @@ exports.get = (req, res, next) => {
     if (err) {
       res.status(HTTP_NOT_FOUND).send(err)
     } else {
-      req.res.rules = rules[0]
+      req.rules = rules[0]
       next()
       // res.status(HTTP_OK).json(rules[0])
     }
