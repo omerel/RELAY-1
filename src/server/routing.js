@@ -29,7 +29,8 @@ import {
   MSNS_RATIO_API_ROUTE,
   MESSAGE_TTL_API_ROUTE,
   RANDOM_NODE_TIME_API_ROUTE,
-  SYNC_API_ROUTE,
+  SYNC_METADATA_API_ROUTE,
+  SYNC_DATA_API_ROUTE,
 } from '../shared/routes'
 
 import {
@@ -80,8 +81,8 @@ export default (app: Object) => {
   app.route(`${MESSAGE_TTL_API_ROUTE}/:val`).put(rules.updateMessageTTL)
   app.route(`${RANDOM_NODE_TIME_API_ROUTE}/:val`).put(rules.updateRandomNodeTime)
 
-  app.route(`${SYNC_API_ROUTE}/:id`).put(sync.sync)
-  // app.route(SYNC_API_ROUTE).put(sync.sync)
+  app.route(`${SYNC_METADATA_API_ROUTE}/:id`).put(sync.metadata)
+  app.route(`${SYNC_DATA_API_ROUTE}/:id`).put(sync.data)
 
   // Web app routes
   app.get(HOME_PAGE_ROUTE, (req, res) => {

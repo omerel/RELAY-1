@@ -12,23 +12,23 @@ import {
 const Schema = mongoose.Schema
 
 const MessageSchema = new Schema({
-  uuid: { type: String, unique: true },
-  timeCreated: Date,
-  status: { type: Number,
+  mId: { type: String, unique: true },
+  mTimeCreated: Date,
+  mStatus: { type: Number,
     enum: [STATUS_MESSAGE_CREATED,
       STATUS_MESSAGE_SENT,
       STATUS_MESSAGE_RECEIVED_IN_SERVER,
       STATUS_MESSAGE_DELIVERED],
   },
-  senderId: String /* { type: mongoose.Schema.Types.ObjectId, ref: 'nodes' }*/,
-  destinationId: String /* { type: mongoose.Schema.Types.ObjectId, ref: 'nodes' }*/,
-  type: {
+  mSenderId: String /* { type: mongoose.Schema.Types.ObjectId, ref: 'nodes' }*/,
+  mDestinationId: String /* { type: mongoose.Schema.Types.ObjectId, ref: 'nodes' }*/,
+  mType: {
     type: Number,
     enum: [TYPE_MESSAGE_TEXT,
       TYPE_MESSAGE_INCLUDE_ATTACHMENT],
   },
-  content: String,
-  attachment: Buffer,
+  mContent: String,
+  mAttachment: Buffer,
 })
 
 // module.exports = mongoose.model('Messages', MessageSchema)

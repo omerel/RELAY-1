@@ -22,22 +22,24 @@ import {
 mongoose.set('debug', true)
 
 // SyncMetadata
-exports.sync = (req, res, next) => {
-  if (req.params.id && req.body.node) {
+exports.metadata = (req, res, next) => {
+  if (req.params.id && req.body.myNode) {
+    req.body.node = req.body.myNode
     node.update(
-      relations.sync(
-        res.status(HTTP_OK).json('{ All OK }')))
+      messages.syncMetadata(
+        relations.sync(
+          res.status(HTTP_OK).json('{ All OK }'))))
   }
-  next()
+  return next()
 }
 
 // Metadata (node, known_relation, known_messages)
 // response: (rank, rankTimestamp, known_relations, known_messages)
-exports.sync = (req, res) => {
+exports.data = (req, res, next) => {
   if (req.params.id && req.body.node) {
     // Sync body contains:
-    // updateNodes [nodes]
-    // updateRelation [relations]
+    // nodeList [nodes]
+    // relationsList [relations]
     // updateMessages [messages]
     // req.body.node._id = req.params.id
     node.update(
@@ -65,4 +67,5 @@ exports.sync = (req, res) => {
             // Status OK
     )))))
   }
+  return next()
 }

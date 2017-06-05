@@ -14,10 +14,10 @@ const Schema = mongoose.Schema
 const HandShakeSchema = new Schema({
   // nodeA: { type: mongoose.Schema.Types.ObjectId, ref: 'nodes' },
   // nodeB: { type: mongoose.Schema.Types.ObjectId, ref: 'nodes' },
-  handShakeRank: { type: Number, default: DEFAULT_RANK },
-  handShakeCounter: { type: Number, min: 0, default: 0 },
+  mHandShakeRank: { type: Number, default: DEFAULT_RANK, require: true },
+  mHandShakeCounter: { type: Number, min: 0, default: 0 },
   // handShakeEvents: [HandShakeEventSchema],
-  handShakeEvents: [{ geoLocation: String, timeStamp: Date }],
+  mHandShakeEvents: [{ geoLocation: String, timeStamp: Date }],
 })
 
 module.exports = mongoose.model('handshakes', HandShakeSchema)
