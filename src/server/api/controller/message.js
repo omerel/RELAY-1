@@ -94,12 +94,12 @@ exports.update = (req, res) => {
 }
 
 exports.sync = (req, res, next) => {
-  if (!req.body.known_messages) {
+  if (!req.body.knownMessagesList) {
     return res.status(HTTP_BAD_REQUEST).send('No relation id')
   }
-  const nodeMessages = req.body.messages
+  const nodeMessages = req.body.knownMessagesList
   for (let i = 0, len = nodeMessages.length; i < len; i += 1) {
-    Message.findOne({ uuid: nodeMessages[i].uuid }, (err, srvMessage) => {
+    Message.findOne({ uuid: nodeMessages[i].messageId }, (err, srvMessage) => {
       if (err) { res.status(HTTP_NOT_FOUND).send(err) }
       if (srvMessage) {
         if (nodeMessages[i].status < STATUS_MESSAGE_RECEIVED_IN_SERVER) {
@@ -107,6 +107,7 @@ exports.sync = (req, res, next) => {
         } else if (nodeMessages[i].status === STATUS_MESSAGE_DELIVERED) {
           srvMessage.status.set(STATUS_MESSAGE_DELIVERED)
         }
+        // TODO: If destination is e-mail guest - send to guest
         srvMessage.save((error) => {
           if (error) { res.status(HTTP_INTERNAL_SERVER_ERROR).send(error) }
         })

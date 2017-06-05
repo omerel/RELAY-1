@@ -4,7 +4,7 @@ const Schema = mongoose.Schema
 
 const RelationSchema = new Schema({
   node: { type: mongoose.Schema.Types.ObjectId, ref: 'nodes', unique: true },
-  friends: [{ type: mongoose.Schema.Types.ObjectId, ref: 'nodes' }],
+  relations: [{ type: mongoose.Schema.Types.ObjectId, ref: 'nodes' }],
   timeStamp: { type: Date, default: Date.Now },
 })
 

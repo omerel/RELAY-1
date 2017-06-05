@@ -21,8 +21,24 @@ import {
 
 mongoose.set('debug', true)
 
+// SyncMetadata
+exports.sync = (req, res, next) => {
+  if (req.params.id && req.body.node) {
+    node.update(
+      relations.sync(
+        res.status(HTTP_OK).json('{ All OK }')))
+  }
+  next()
+}
+
+// Metadata (node, known_relation, known_messages)
+// response: (rank, rankTimestamp, known_relations, known_messages)
 exports.sync = (req, res) => {
   if (req.params.id && req.body.node) {
+    // Sync body contains:
+    // updateNodes [nodes]
+    // updateRelation [relations]
+    // updateMessages [messages]
     // req.body.node._id = req.params.id
     node.update(
       syncHistory.addEvent(
@@ -41,6 +57,7 @@ exports.sync = (req, res) => {
                 },
               },
             ]),
+            // If no name, phone, etc it is a mail - don't update the collection - send e-mail
             // Response:
             // Rank
             // Relations (delta by rank)
