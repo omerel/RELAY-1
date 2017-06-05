@@ -84,7 +84,7 @@ exports.addEvent = (req, res, next) => {
       }
       req.syncHistory = syncHistory
       // res.status(HTTP_OK).json(syncHistory)
-      return next(syncHistory)
+      return next()
     })
   } else {
     res.status(HTTP_BAD_REQUEST).send('No syncHistory id')

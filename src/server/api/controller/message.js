@@ -47,8 +47,8 @@ exports.add = (req, res) => {
   // if (req.body.message.uuid !== ('' || null)) {
   //   newMessage._id = req.body.message.uuid
   // }
-  if (req.body.message.status !== ('' || null) && req.body.message.status !== STATUS_MESSAGE_DELIVERED) {
-    newMessage.status = STATUS_MESSAGE_RECEIVED_IN_SERVER
+  if (req.body.message.mStatus !== ('' || null) && req.body.message.mStatus !== STATUS_MESSAGE_DELIVERED) {
+    newMessage.mStatus = STATUS_MESSAGE_RECEIVED_IN_SERVER
   }
   try {
     newMessage.save((err) => {
@@ -81,7 +81,8 @@ exports.addMany = (req, res) => {
 
 exports.update = (req, res) => {
   if (req.params.id) {
-    Message.findOneAndUpdate(req.params.id, req.body.message, { new: true }, (err, message) => {
+    Message.findOneAndUpdate(req.params.id, req.body.message, { new: true, upsert: true },
+    (err, message) => {
       if (err) {
         res.status(HTTP_NOT_FOUND).send(err)
       } else {
@@ -93,10 +94,11 @@ exports.update = (req, res) => {
   }
 }
 
-exports.sync = (req, res, next) => {
+exports.syncMetadata = (req, res, next) => {
   if (!req.body.knownMessagesList) {
     return res.status(HTTP_BAD_REQUEST).send('No relation id')
   }
+  // TODO: Go through all my known messages and all node known messages and perform diff
   const nodeMessages = req.body.knownMessagesList
   for (let i = 0, len = nodeMessages.length; i < len; i += 1) {
     Message.findOne({ uuid: nodeMessages[i].messageId }, (err, srvMessage) => {

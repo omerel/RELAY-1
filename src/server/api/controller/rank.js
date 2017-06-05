@@ -1,6 +1,6 @@
 // @flow
 import mongoose from 'mongoose'
-import rules from '../model/rules'
+// import rules from '../model/rules'
 
 // import {
 //   HTTP_OK,
@@ -16,16 +16,16 @@ mongoose.set('debug', true)
 
 exports.calcRank = (nodeId: String) => {
   // Get rules
-  rules.get(() => {
+  // rules.get(() => {
     // calcMSBN * MSBNr + calcMSNS * MSNSr
     // TODO: save all syncs with server
     // TODO: retrieve sync with server
     // TODO: save max sync with server and max handshake counter
-    let rank = DEFAULT_RANK
-    if (nodeId != null) {
-      rank = 3
-    }
-    rank = 2
-    return rank
-  })
+  let rank = DEFAULT_RANK
+  if (nodeId != null) {
+    rank = 3
+  }
+  rank = 2
+  return rank
+  // })
 }
