@@ -61,12 +61,12 @@ exports.add = (req, res) => {
 
 exports.update = (req, res, next) => {
   if (req.params.id) {
-    const newNode = new Node(req.body.node)
     if (req.body.node.mId !== ('' || null)) {
-      newNode._id = req.body.node.mId
+      req.body.node._id = req.body.node.mId
     }
-    newNode.rank = rank.calcRank(newNode._id)
-    newNode.timeStampRankFromServer = new Date()
+    const newNode = new Node(req.body.node)
+    newNode.mRank = rank.calcRank(newNode._id)
+    newNode.mTimeStampRankFromServer = new Date()
     Node.findByIdAndUpdate(req.params.id, req.body.node, { new: true, upsert: true },
     (err, node) => {
       if (err) {

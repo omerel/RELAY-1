@@ -25,10 +25,11 @@ mongoose.set('debug', true)
 exports.metadata = (req, res, next) => {
   if (req.params.id && req.body.myNode) {
     req.body.node = req.body.myNode
-    node.update(
+    node.update(() => {
       messages.syncMetadata(
         relations.sync(
-          res.status(HTTP_OK).json('{ All OK }'))))
+          res.status(HTTP_OK).json('{ All OK }')))
+    })
   }
   return next()
 }
