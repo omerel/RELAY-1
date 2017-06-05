@@ -42,9 +42,9 @@ exports.findById = (req, res, next) => {
 
 exports.add = (req, res) => {
   const newNode = new Node(req.body.node)
-  if (req.body.node.uuid !== ('' || null)) {
-    req.body.node._id = req.body.node.uuid
-    newNode._id = req.body.node.uuid
+  if (req.body.node.mId !== ('' || null)) {
+    req.body.node._id = req.body.node.mId
+    newNode._id = req.body.node.mId
   }
   newNode.rank = rank.calcRank(newNode._id)
   newNode.timeStampRankFromServer = new Date()
