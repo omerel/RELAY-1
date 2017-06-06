@@ -64,7 +64,7 @@ exports.update = (req, res, next) => {
   if (req.params.id) {
     console.log(`Type of node: ${typeof req.body.node}`)
     console.log(`req.body: ${req.body}`)
-    if (typeof req.body.node === 'string' || req.body.node instanceof String) {
+    if (typeof req.body.node === 'string') {
       console.log(req.body.node)
       req.body.node = JSON.parse(req.body.node)
     }
