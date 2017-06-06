@@ -76,7 +76,6 @@ exports.update = (req, res, next) => {
           Node.findOneAndUpdate({ mId: req.params.id }, req.body.node, { new: true, upsert: true },
           (error, updatednode) => {
             if (error) {
-              console.trace(err)
               return next(error)
             }
             req.node = updatednode
