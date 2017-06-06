@@ -52,7 +52,10 @@ export default (app: Object) => {
 
   app.route(`${NODE_API_ROUTE}/:id`)
       .get(node.findById, (req, res) => res.status(HTTP_OK).json(req.node))
-      .put(node.update, (req, res) => res.status(HTTP_OK).json(req.node))
+      .put(node.update, (req, res) => {
+        res.status(HTTP_OK).json(req.node)
+        console.log(`Sent Response with status HTTP_OK and node:\n${req.node}`)
+      })
       .delete(node.delete)
 
   app.route(MESSAGE_API_ROUTE)
@@ -82,7 +85,10 @@ export default (app: Object) => {
   app.route(`${RANDOM_NODE_TIME_API_ROUTE}/:val`).put(rules.updateRandomNodeTime)
 
   // app.route(`${SYNC_METADATA_API_ROUTE}/:id`).put(sync.metadata)
-  app.route(`${SYNC_METADATA_API_ROUTE}/:id`).put(sync.validateMetadata, node.update, node.graph)
+  app.route(`${SYNC_METADATA_API_ROUTE}/:id`).put(
+    sync.validateMetadata,
+    node.update,
+    node.graph)
   app.route(`${SYNC_DATA_API_ROUTE}/:id`).put(sync.data)
 
   // Web app routes
