@@ -52,10 +52,7 @@ export default (app: Object) => {
 
   app.route(`${NODE_API_ROUTE}/:id`)
       .get(node.findById, (req, res) => res.status(HTTP_OK).json(req.node))
-      .put(node.update, (req, res) => {
-        res.status(HTTP_OK).json(req.node)
-        console.log(`Sent Response with status HTTP_OK and node:\n${req.node}`)
-      })
+      .put(node.update, (req, res) => res.status(HTTP_OK).json(req.node))
       .delete(node.delete)
 
   app.route(MESSAGE_API_ROUTE)

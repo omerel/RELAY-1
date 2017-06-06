@@ -63,8 +63,8 @@ exports.add = (req, res) => {
 exports.update = (req, res, next) => {
   if (req.params.id) {
     console.log(`Type of node: ${typeof req.body.node}`)
+    console.log(`noode: ${req.body.node}`)
     if (typeof req.body.node === 'string' || req.body.node instanceof String) {
-      console.log(req.body.node)
       req.body.node = JSON.parse(req.body.node)
     }
     // if (req.body.node.mId !== ('' || null)) {
