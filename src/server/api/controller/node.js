@@ -96,7 +96,7 @@ exports.update = (req, res, next) => {
 exports.delete = (req, res) => {
   if (req.params.id) {
     Node.remove({
-      _id: req.params.id,
+      mId: req.params.id,
     }, (err) => {
       if (err) {
         return res.send(err)
