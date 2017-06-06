@@ -63,14 +63,14 @@ exports.add = (req, res) => {
 exports.update = (req, res, next) => {
   if (req.params.id) {
     console.log(`Type of node: ${typeof req.body.node}`)
-    console.log(`req.body: ${req.body}`)
-    if (typeof req.body.node === 'string') {
-      console.log(req.body.node)
-      req.body.node = JSON.parse(req.body.node)
-    }
+    // if (typeof req.body.node === 'string' || req.body.node instanceof String) {
+    //   console.log(req.body.node)
+    //   req.body.node = JSON.parse(req.body.node)
+    // }
     // if (req.body.node.mId !== ('' || null)) {
     // req.body.node._id = req.params.id
     // }
+    console.log(`req.body: ${req.body}`)
     // const newNode = new Node(req.body.node)
     // newNode.mRank = rank.calcRank(newNode._id)
     // newNode.mTimeStampRankFromServer = new Date()
@@ -80,6 +80,7 @@ exports.update = (req, res, next) => {
     Node.findOneAndUpdate({ mId: req.params.id }, req.body.node, { new: true, upsert: true },
     (err, node) => {
       if (err) {
+        console.error(err)
         return res.status(HTTP_INTERNAL_SERVER_ERROR).send(err)
       }
       req.node = node
