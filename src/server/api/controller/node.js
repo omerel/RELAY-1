@@ -68,7 +68,9 @@ exports.update = (req, res, next) => {
       req.body.node = JSON.parse(req.body.node)
     }
     // if (req.body.node.mId !== ('' || null)) {
-    // req.body.node._id = req.params.id
+    if (req.body.node.mId !== ('' || null)) {
+      req.body.node._id = req.body.node.mId
+    }
     // }
     // console.log(`req.body: ${req.body}`)
     // const newNode = new Node(req.body.node)
@@ -125,9 +127,10 @@ exports.graph = (req, res, next) => {
         console.error(err)
         return res.status(HTTP_NOT_FOUND).json('Node graph not found')
       }
-      console.log(result)
+      console.log(`Graph: ${result}`)
       req.graph = result
       return next()
     }).exec()
+  console.log(`Graph: ${req.graph}`)
   return res.status(HTTP_INTERNAL_SERVER_ERROR).json('Couldnt perform aggregation')
 }
