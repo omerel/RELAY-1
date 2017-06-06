@@ -81,7 +81,8 @@ export default (app: Object) => {
   app.route(`${MESSAGE_TTL_API_ROUTE}/:val`).put(rules.updateMessageTTL)
   app.route(`${RANDOM_NODE_TIME_API_ROUTE}/:val`).put(rules.updateRandomNodeTime)
 
-  app.route(`${SYNC_METADATA_API_ROUTE}/:id`).put(sync.metadata)
+  // app.route(`${SYNC_METADATA_API_ROUTE}/:id`).put(sync.metadata)
+  app.route(`${SYNC_METADATA_API_ROUTE}/:id`).put(sync.validateMetadata, node.update, node.graph)
   app.route(`${SYNC_DATA_API_ROUTE}/:id`).put(sync.data)
 
   // Web app routes

@@ -52,6 +52,7 @@ exports.add = (req, res) => {
       if (err) {
         return res.send(err)
       }
+      req.node = newNode
       return res.status(HTTP_CREATED).json({ message: 'Node added!' })
     })
   } catch (ex) {
@@ -62,7 +63,7 @@ exports.add = (req, res) => {
 exports.update = (req, res, next) => {
   if (req.params.id) {
     // if (req.body.node.mId !== ('' || null)) {
-    //   req.body.node._id = req.body.node.mId
+    req.body.node._id = req.body.node.mId
     // }
     const newNode = new Node(req.body.node)
     newNode.mRank = rank.calcRank(newNode._id)
@@ -73,7 +74,6 @@ exports.update = (req, res, next) => {
         return res.status(HTTP_NOT_FOUND).send(err)
       }
       req.node = node
-      // res.status(HTTP_OK).json(node)
       return next()
     })
   } else {
@@ -94,4 +94,25 @@ exports.delete = (req, res) => {
   } else {
     res.status(HTTP_BAD_REQUEST).send('No node id')
   }
+}
+
+exports.graph = (req, res, next) => {
+  if (!req.node) { return res.status(HTTP_BAD_REQUEST).json('Must specify node') }
+  // Suppose we have a collection of courses, where a document might look like
+  // `{ _id: 0, name: 'Calculus', prerequisite: 'Trigonometry'}` and
+  // `{ _id: 0, name: 'Trigonometry', prerequisite: 'Algebra' }`
+  Node.aggregate({ $match: { mId: req.node.id } }).graphLookup({
+    from: 'relations',
+    startWith: '$mId',
+    connectFromField: 'relations',
+    connectToField: 'node',
+    as: 'relations',
+    maxDepth: req.node.mRank,
+    depthField: 'nodeDegree' },
+    (err, result) => {
+      if (err) { return res.status(HTTP_NOT_FOUND).json('Node graph not found') }
+      req.graph = result
+      return next()
+    }).exec()
+  return res.status(HTTP_INTERNAL_SERVER_ERROR).json('Couldnt perform aggregation')
 }

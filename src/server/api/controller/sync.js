@@ -13,7 +13,7 @@ import {
   HTTP_OK,
   // HTTP_CREATED,
   // HTTP_NOT_FOUND,
-  // HTTP_BAD_REQUEST,
+  HTTP_BAD_REQUEST,
   // HTTP_INTERNAL_SERVER_ERROR,
 } from '../../../shared/config'
 
@@ -21,17 +21,38 @@ import {
 
 mongoose.set('debug', true)
 
-// SyncMetadata
-exports.metadata = (req, res, next) => {
+exports.validateMetadata = (req, res, next) => {
   if (req.params.id && req.body.myNode) {
     req.body.node = req.body.myNode
-    node.update(() => {
-      messages.syncMetadata(
-        relations.sync(
-          res.status(HTTP_OK).json('{ All OK }')))
-    })
+    req.body.node._id = req.params.id
+    return next()
   }
-  return next()
+  return next(new Error('Node not supplemented'))
+}
+
+// SyncMetadata
+exports.metadata = (req, res) => {
+  if (req.params.id && req.body.myNode) {
+    req.body.node = req.body.myNode
+    node.update()
+    req.res.mRank = req.node.mRank
+    req.res.mTimeStampRankFromServer = req.node.mTimeStampRankFromServer
+    node.graph()
+    console.log(req.graph)
+    req.res.graph = req.graph
+        // messages.syncMetadata(() => {
+        //   req.res.knownMessagesList = req.knownMessagesList
+        //   relations.sync(() => {
+        //     req.res.knownRelationsList = req.res.knownRelationsList
+        //     res.status(HTTP_OK).json(req.res)
+        //   })
+        // })
+    return res.status(HTTP_OK).send({ rank: req.node.mRank,
+      mTimeStampRankFromServer: req.node.mTimeStampRankFromServer,
+      knownMessagesList: req.knownMessagesList,
+      knownRelationsList: req.knownRelationsList })
+  }
+  return res.status(HTTP_BAD_REQUEST).json('Missing node to sync')
 }
 
 // Metadata (node, known_relation, known_messages)
