@@ -63,14 +63,15 @@ exports.add = (req, res) => {
 exports.update = (req, res, next) => {
   if (req.params.id) {
     console.log(`Type of node: ${typeof req.body.node}`)
-    // if (typeof req.body.node === 'string' || req.body.node instanceof String) {
-    //   console.log(req.body.node)
-    //   req.body.node = JSON.parse(req.body.node)
-    // }
+    if (typeof req.body.node === 'string' || req.body.node instanceof String) {
+      console.log(req.body.node)
+      // req.body.node = JSON.parse(req.body.node)
+      req.body.node = req.body.node.prototype.toJSON
+    }
     // if (req.body.node.mId !== ('' || null)) {
     // req.body.node._id = req.params.id
     // }
-    console.log(`req.body: ${req.body}`)
+    // console.log(`req.body: ${req.body}`)
     // const newNode = new Node(req.body.node)
     // newNode.mRank = rank.calcRank(newNode._id)
     // newNode.mTimeStampRankFromServer = new Date()
@@ -121,7 +122,10 @@ exports.graph = (req, res, next) => {
     maxDepth: req.node.mRank,
     depthField: 'nodeDegree' },
     (err, result) => {
-      if (err) { return res.status(HTTP_NOT_FOUND).json('Node graph not found') }
+      if (err) {
+        console.error(err)
+        return res.status(HTTP_NOT_FOUND).json('Node graph not found')
+      }
       console.log(result)
       req.graph = result
       return next()
