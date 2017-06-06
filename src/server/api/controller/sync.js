@@ -24,7 +24,6 @@ mongoose.set('debug', true)
 exports.validateMetadata = (req, res, next) => {
   if (req.params.id && req.body.myNode) {
     req.body.node = req.body.myNode
-    req.body.node._id = req.params.id
     return next()
   }
   // return next(new Error('Node not supplemented'))

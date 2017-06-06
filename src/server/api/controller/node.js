@@ -62,6 +62,9 @@ exports.add = (req, res) => {
 
 exports.update = (req, res, next) => {
   if (req.params.id) {
+    if (typeof req.body.node === 'string' || req.body.node instanceof String) {
+      req.body.node = JSON.parse(req.body.node)
+    }
     // if (req.body.node.mId !== ('' || null)) {
     // req.body.node._id = req.params.id
     // }
@@ -93,6 +96,7 @@ exports.delete = (req, res) => {
       if (err) {
         return res.send(err)
       }
+      req.node = null
       return res.status(HTTP_OK).json({ message: `Node ${req.params.id} successfully deleted` })
     })
   } else {
@@ -115,6 +119,7 @@ exports.graph = (req, res, next) => {
     depthField: 'nodeDegree' },
     (err, result) => {
       if (err) { return res.status(HTTP_NOT_FOUND).json('Node graph not found') }
+      console.log(result)
       req.graph = result
       return next()
     }).exec()
