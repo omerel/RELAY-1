@@ -63,10 +63,11 @@ exports.add = (req, res) => {
 exports.update = (req, res, next) => {
   if (req.params.id) {
     console.log(`Type of node: ${typeof req.body.node}`)
-    console.log(`noode: ${req.body.node}`)
+    console.log(`node before parse:\n${req.body.node}`)
     if (typeof req.body.node === 'string' || req.body.node instanceof String) {
       req.body.node = JSON.parse(req.body.node)
     }
+    console.log(`node after parse:\n${req.body.node}`)
     // if (req.body.node.mId !== ('' || null)) {
     // if (req.body.node.mId !== ('' || null)) {
     //   req.body.node._id = req.body.node.mId
@@ -82,8 +83,20 @@ exports.update = (req, res, next) => {
     Node.findOneAndUpdate({ mId: req.params.id }, req.body.node, { new: true, upsert: true },
     (err, node) => {
       if (err) {
-        console.error(err)
-        return res.status(HTTP_INTERNAL_SERVER_ERROR).send(err)
+        if (err.code === 11000) {
+          // Another upsert occurred during the upsert, try again. You could omit the
+          // upsert option here if you don't ever delete docs while this is running.
+          // Monitor.update({ _id: minute }, { $inc: update }, { upsert: true },
+          Node.findOneAndUpdate({ mId: req.params.id }, req.body.node, { new: true, upsert: true },
+          (error, updatednode) => {
+            if (error) {
+              console.trace(err)
+              return res.status(HTTP_INTERNAL_SERVER_ERROR).send(err)
+            }
+            req.node = updatednode
+            return next()
+          })
+        }
       }
       req.node = node
       return next()
