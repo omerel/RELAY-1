@@ -63,12 +63,16 @@ exports.add = (req, res) => {
 exports.update = (req, res, next) => {
   if (req.params.id) {
     // if (req.body.node.mId !== ('' || null)) {
-    req.body.node._id = req.body.node.mId
+    // req.body.node._id = req.params.id
     // }
-    const newNode = new Node(req.body.node)
-    newNode.mRank = rank.calcRank(newNode._id)
-    newNode.mTimeStampRankFromServer = new Date()
-    Node.findOneAndUpdate(req.params.id, req.body.node, { new: true, upsert: true },
+    console.log(req.body)
+    // const newNode = new Node(req.body.node)
+    // newNode.mRank = rank.calcRank(newNode._id)
+    // newNode.mTimeStampRankFromServer = new Date()
+    // delete newNode._id
+    req.body.node.mRank = rank.calcRank(req.params.id)
+    req.body.node.mTimeStampRankFromServer = new Date()
+    Node.findOneAndUpdate({ mId: req.params.id }, req.body.node, { new: true, upsert: true },
     (err, node) => {
       if (err) {
         return res.status(HTTP_NOT_FOUND).send(err)

@@ -27,7 +27,8 @@ exports.validateMetadata = (req, res, next) => {
     req.body.node._id = req.params.id
     return next()
   }
-  return next(new Error('Node not supplemented'))
+  // return next(new Error('Node not supplemented'))
+  return res.status(HTTP_BAD_REQUEST).json('Node not supplemented')
 }
 
 // SyncMetadata
@@ -35,11 +36,11 @@ exports.metadata = (req, res) => {
   if (req.params.id && req.body.myNode) {
     req.body.node = req.body.myNode
     node.update()
-    req.res.mRank = req.node.mRank
-    req.res.mTimeStampRankFromServer = req.node.mTimeStampRankFromServer
+    // req.res.mRank = req.node.mRank
+    // req.res.mTimeStampRankFromServer = req.node.mTimeStampRankFromServer
     node.graph()
     console.log(req.graph)
-    req.res.graph = req.graph
+    // req.res.graph = req.graph
         // messages.syncMetadata(() => {
         //   req.res.knownMessagesList = req.knownMessagesList
         //   relations.sync(() => {
