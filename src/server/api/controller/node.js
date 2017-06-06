@@ -41,9 +41,9 @@ exports.findById = (req, res, next) => {
 }
 
 exports.add = (req, res) => {
-  if (req.body.node.mId !== ('' || null)) {
-    req.body.node._id = req.body.node.mId
-  }
+  // if (req.body.node.mId !== ('' || null)) {
+  //   req.body.node._id = req.body.node.mId
+  // }
   const newNode = new Node(req.body.node)
   newNode.mRank = rank.calcRank(newNode.mId)
   newNode.mTimeStampRankFromServer = new Date()
@@ -68,9 +68,9 @@ exports.update = (req, res, next) => {
       req.body.node = JSON.parse(req.body.node)
     }
     // if (req.body.node.mId !== ('' || null)) {
-    if (req.body.node.mId !== ('' || null)) {
-      req.body.node._id = req.body.node.mId
-    }
+    // if (req.body.node.mId !== ('' || null)) {
+    //   req.body.node._id = req.body.node.mId
+    // }
     // }
     // console.log(`req.body: ${req.body}`)
     // const newNode = new Node(req.body.node)
