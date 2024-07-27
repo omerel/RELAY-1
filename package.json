@@ -27,7 +27,7 @@
     "babel-polyfill": "^6.23.0",
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.2",
-    "bootstrap": "4.0.0-alpha.6",
+    "bootstrap": "4.0.0",
     "compression": "^1.6.2",
     "express": "^4.15.0",
     "immutable": "^4.0.0-rc.1",
